@@ -14,33 +14,42 @@ type Logger struct {
 // Fields type, used to pass to `WithFields`.
 type Fields map[string]interface{}
 
-func New(isDebug bool) *Logger {
+func New(levelType string) *Logger {
 
-	logLevel := log.InfoLevel
-	if isDebug {
-		log.SetReportCaller(true)
+	var logLevel log.Level = log.InfoLevel
+
+	switch levelType {
+	case "INFO":
+		logLevel = log.InfoLevel
+	case "DEBUG":
 		logLevel = log.DebugLevel
+	case "WARN":
+		logLevel = log.WarnLevel
+	case "ERROR":
+		logLevel = log.ErrorLevel
+	case "PANIC":
+		logLevel = log.PanicLevel
+	case "FATAL":
+		logLevel = log.FatalLevel
 	}
 
 	logger := &log.Logger{
 		Out: os.Stderr,
 		Formatter: &prefixed.TextFormatter{
 			DisableColors:   false,
-			TimestampFormat: "2006-01-02 15:04:05",
+			TimestampFormat: "2000-01-01 00:00:00",
 			FullTimestamp:   true,
 			ForceFormatting: true,
+			DisableSorting:  false,
 		},
 		Hooks: make(log.LevelHooks),
 		Level: logLevel,
 	}
 
-	// if isDebug {
-	// 	logger.SetReportCaller(true)
-	// }
-
 	return &Logger{logger: logger}
 }
 
+// Info logs a message at level Info on the standard logger.
 func (l *Logger) Info(args ...interface{}) {
 	l.logger.Info(args...)
 }
@@ -61,6 +70,7 @@ func (l *Logger) Print(args ...interface{}) {
 	l.logger.Print(args...)
 }
 
+// Warn logs a message at level Warn on the standard logger.
 func (l *Logger) Warn(args ...interface{}) {
 	l.logger.Warn(args...)
 }
