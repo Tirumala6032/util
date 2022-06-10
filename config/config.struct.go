@@ -1,12 +1,13 @@
 package config
 
 type Config struct {
-	Server           Server           `yaml:"server" json:"server"`
-	LogLevel         string           `yaml:"logLevel" json:"logLevel"`
-	Database         Database         `yaml:"database" json:"database"`
-	AuthService      AuthService      `yaml:"authService" json:"authService"`
-	WebSocketService WebSocketService `yaml:"webSocketService" json:"webSocketService"`
-	UserService      UserService      `yaml:"userService" json:"userService"`
+	Server           	Server           	`yaml:"server" json:"server"`
+	LogLevel         	string           	`yaml:"logLevel" json:"logLevel"`
+	Database         	Database         	`yaml:"database" json:"database"`
+	AuthService      	AuthService      	`yaml:"authService" json:"authService"`
+	WebSocketService 	WebSocketService 	`yaml:"webSocketService" json:"webSocketService"`
+	UserService      	UserService      	`yaml:"userService" json:"userService"`
+	LeaderBoardService     	LeaderBoardService      `yaml:"leaderBoardService" json:"leaderBoardService"`
 }
 
 type Server struct {
@@ -34,6 +35,11 @@ type WebSocketService struct {
 }
 
 type UserService struct {
+	ServerHost string `yaml:"serverHost" json:"serverHost"`
+	ServerPort int    `yaml:"serverPort" json:"serverPort"`
+}
+
+type LeaderBoardService struct {
 	ServerHost string `yaml:"serverHost" json:"serverHost"`
 	ServerPort int    `yaml:"serverPort" json:"serverPort"`
 }
